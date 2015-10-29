@@ -1,3 +1,13 @@
+## Reflektive AR Patch
+*   Avoid disabling errors on the PostgreSQL connection when enabling the
+    standard_conforming_strings setting. Errors were previously disabled because
+    the setting wasn't writable in Postgres 8.1 and didn't exist in earlier
+    versions. Now Rails only supports Postgres 8.2+ we're fine to assume the
+    setting exists. Disabling errors caused problems when using a connection
+    pooling tool like PgBouncer because it's not guaranteed to have the same
+    connection between calls to `execute` and it could leave the connection
+    with errors disabled.
+
 ## Rails 4.1.16 (July 12, 2016) ##
 
 *   Correctly pass MySQL options when using structure_dump or structure_load
